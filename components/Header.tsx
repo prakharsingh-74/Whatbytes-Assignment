@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, ShoppingCart, User} from "lucide-react";
+import { Search, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -37,25 +37,25 @@ export default function Header() {
               placeholder="Search for products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="w-full pl-10 pr-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
           </div>
         </form>
 
-        {/* Cart and Profile */}
-        <div className="flex items-center gap-6">
-          <Link href="/cart" className="relative flex items-center gap-2 hover:text-gray-200 transition">
-            <ShoppingCart className="w-6 h-6" />
-            <span>Cart</span>
+        {/* Cart Button */}
+        <div className="flex items-center">
+          <Link 
+            href="/cart" 
+            className="relative flex items-center gap-2 bg-[#0a2540] hover:bg-[#0d2f4f] transition px-6 py-2 rounded-lg"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            <span className="font-medium">Cart</span>
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                 {cartCount}
               </span>
             )}
           </Link>
-          <button className="hover:text-gray-200 transition">
-            <User className="w-6 h-6" />
-          </button>
         </div>
       </div>
     </header>
