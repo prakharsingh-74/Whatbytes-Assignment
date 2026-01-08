@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Whatbytes - E-commerce Store",
+  title: "E-commerce Store",
   description: "Shop the latest products across electronics, clothing, and home categories",
 };
 

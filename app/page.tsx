@@ -1,12 +1,13 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { products } from "@/data/products";
 import FiltersSidebar from "@/components/FiltersSidebar";
 import ProductGrid from "@/components/ProductGrid";
 import { Product } from "@/types";
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   
   const category = searchParams.get("category") || "All";
@@ -39,18 +40,26 @@ export default function Home() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Filters Sidebar */}
-        <div className="lg:col-span-1">
-          <FiltersSidebar />
-        </div>
-        
-        {/* Product Grid */}
-        <div className="lg:col-span-3">
-          <ProductGrid products={filteredProducts} />
-        </div>
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      {/* Filters Sidebar */}
+      <div className="lg:col-span-1">
+        <FiltersSidebar />
       </div>
+      
+      {/* Product Grid */}
+      <div className="lg:col-span-3">
+        <ProductGrid products={filteredProducts} />
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Suspense fallback={<div className="text-center py-20 text-gray-500">Loading products...</div>}>
+        <HomeContent />
+      </Suspense>
     </div>
   );
 }
