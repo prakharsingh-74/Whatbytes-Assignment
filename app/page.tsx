@@ -10,14 +10,20 @@ import { Product } from "@/types";
 function HomeContent() {
   const searchParams = useSearchParams();
   
-  const category = searchParams.get("category") || "All";
+  const selectedCategories = searchParams.get("category")?.split(",").filter(v => v) || [];
+  const selectedBrands = searchParams.get("brand")?.split(",").filter(v => v) || [];
   const priceMax = parseInt(searchParams.get("priceMax") || "1000");
   const searchQuery = searchParams.get("search") || "";
 
   // Filter products based on URL parameters
   const filteredProducts = products.filter((product: Product) => {
-    // Category filter
-    if (category !== "All" && product.category !== category) {
+    // Category filter (multi-select)
+    if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
+      return false;
+    }
+    
+    // Brand filter (multi-select)
+    if (selectedBrands.length > 0 && product.brand && !selectedBrands.includes(product.brand)) {
       return false;
     }
     

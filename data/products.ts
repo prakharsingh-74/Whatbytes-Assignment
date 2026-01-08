@@ -8,6 +8,7 @@ export const products: Product[] = [
     category: "Clothing",
     description: "High-performance running shoes with superior cushioning and support for long-distance runs.",
     image: "/images/running-shoes.png",
+    brand: "Nike",
     rating: 4.5,
   },
   {
@@ -17,6 +18,7 @@ export const products: Product[] = [
     category: "Electronics",
     description: "Premium wireless headphones with active noise cancellation and 30-hour battery life.",
     image: "/images/wireless-headphones.png",
+    brand: "Sony",
     rating: 4.8,
   },
   {
@@ -26,6 +28,7 @@ export const products: Product[] = [
     category: "Home",
     description: "Durable waterproof backpack with multiple compartments and laptop sleeve.",
     image: "/images/backpack.png",
+    brand: "Patagonia",
     rating: 4.3,
   },
   {
@@ -35,6 +38,7 @@ export const products: Product[] = [
     category: "Electronics",
     description: "Advanced fitness tracker with heart rate monitoring, GPS, and smartphone notifications.",
     image: "/images/smartwatch.png",
+    brand: "Apple",
     rating: 4.6,
   },
   {
@@ -44,6 +48,7 @@ export const products: Product[] = [
     category: "Clothing",
     description: "UV-protected polarized sunglasses with classic aviator design.",
     image: "/images/sunglasses.png",
+    brand: "Ray-Ban",
     rating: 4.4,
   },
   {
@@ -53,6 +58,7 @@ export const products: Product[] = [
     category: "Electronics",
     description: "Professional-grade mirrorless camera with 24MP sensor and 4K video recording.",
     image: "/images/digital-camera.png",
+    brand: "Canon",
     rating: 4.7,
   },
   {
@@ -62,6 +68,7 @@ export const products: Product[] = [
     category: "Clothing",
     description: "Premium cotton t-shirt with comfortable fit and modern design.",
     image: "/images/tshirt.png",
+    brand: "Adidas",
     rating: 4.2,
   },
   {
@@ -71,6 +78,7 @@ export const products: Product[] = [
     category: "Electronics",
     description: "Lorem ipsum dolor amet, consectetur euisagend. Latest flagship smartphone with advanced camera system and ultra-fast processor.",
     image: "/images/smartphone.png",
+    brand: "Samsung",
     rating: 4.9,
   },
 ];

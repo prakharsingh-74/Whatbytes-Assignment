@@ -1,43 +1,61 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
 
 export default function FiltersSidebar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  const [category, setCategory] = useState(searchParams.get("category") || "All");
-  const [priceMax, setPriceMax] = useState(searchParams.get("priceMax") || "1000");
+  const categories = searchParams.get("category")?.split(",").filter(v => v) || [];
+  const brands = searchParams.get("brand")?.split(",").filter(v => v) || [];
+  const priceMax = searchParams.get("priceMax") || "1000";
 
-  useEffect(() => {
-    setCategory(searchParams.get("category") || "All");
-    setPriceMax(searchParams.get("priceMax") || "1000");
-  }, [searchParams]);
+  const handleCategoryChange = (cat: string) => {
+    const newCategories = categories.includes(cat)
+      ? categories.filter((c) => c !== cat)
+      : [...categories, cat];
+    updateURL({ category: newCategories });
+  };
 
-  const handleCategoryChange = (newCategory: string) => {
-    setCategory(newCategory);
-    updateURL(newCategory, priceMax);
+  const handleBrandChange = (brand: string) => {
+    const newBrands = brands.includes(brand)
+      ? brands.filter((b) => b !== brand)
+      : [...brands, brand];
+    updateURL({ brand: newBrands });
   };
 
   const handlePriceChange = (newPrice: string) => {
-    setPriceMax(newPrice);
-    updateURL(category, newPrice);
+    updateURL({ priceMax: newPrice });
   };
 
-  const updateURL = (cat: string, price: string) => {
+  const updateURL = (overrides: { category?: string[]; brand?: string[]; priceMax?: string }) => {
     const params = new URLSearchParams(searchParams.toString());
     
-    if (cat !== "All") {
-      params.set("category", cat);
-    } else {
-      params.delete("category");
+    // Handle Category
+    if (overrides.category !== undefined) {
+      if (overrides.category.length > 0) {
+        params.set("category", overrides.category.join(","));
+      } else {
+        params.delete("category");
+      }
+    }
+
+    // Handle Brand
+    if (overrides.brand !== undefined) {
+      if (overrides.brand.length > 0) {
+        params.set("brand", overrides.brand.join(","));
+      } else {
+        params.delete("brand");
+      }
     }
     
-    if (price !== "1000") {
-      params.set("priceMax", price);
-    } else {
-      params.delete("priceMax");
+    // Handle Price
+    if (overrides.priceMax !== undefined) {
+      if (overrides.priceMax !== "1000") {
+        params.set("priceMax", overrides.priceMax);
+      } else {
+        params.delete("priceMax");
+      }
     }
     
     router.push(`/?${params.toString()}`);
@@ -45,7 +63,6 @@ export default function FiltersSidebar() {
 
   return (
     <div className="space-y-6">
-      {/* Filters Section - Blue Box */}
       <aside className="bg-[#1a5490] text-white p-6 rounded-2xl">
         <h2 className="text-xl font-bold mb-6">Filters</h2>
         
@@ -53,15 +70,13 @@ export default function FiltersSidebar() {
         <div className="mb-6">
           <h3 className="font-semibold mb-3">Category</h3>
           <div className="space-y-2">
-            {["All", "Electronics", "Clothing", "Home"].map((cat) => (
+            {["Electronics", "Clothing", "Home"].map((cat) => (
               <label key={cat} className="flex items-center gap-3 cursor-pointer hover:opacity-90">
                 <input
-                  type="radio"
-                  name="category"
-                  value={cat}
-                  checked={category === cat}
-                  onChange={(e) => handleCategoryChange(e.target.value)}
-                  className="w-4 h-4 accent-white cursor-pointer"
+                  type="checkbox"
+                  checked={categories.includes(cat)}
+                  onChange={() => handleCategoryChange(cat)}
+                  className="w-4 h-4 accent-white rounded cursor-pointer"
                 />
                 <span className="text-sm">{cat}</span>
               </label>
@@ -69,7 +84,24 @@ export default function FiltersSidebar() {
           </div>
         </div>
 
-        {/* Price Slider */}
+        {/* Brand Filter */}
+        <div className="mb-6">
+          <h3 className="font-semibold mb-3">Brand</h3>
+          <div className="space-y-2">
+            {["Nike", "Sony", "Patagonia", "Apple", "Ray-Ban", "Canon", "Adidas", "Samsung"].map((brand) => (
+              <label key={brand} className="flex items-center gap-3 cursor-pointer hover:opacity-90">
+                <input
+                  type="checkbox"
+                  checked={brands.includes(brand)}
+                  onChange={() => handleBrandChange(brand)}
+                  className="w-4 h-4 accent-white rounded cursor-pointer"
+                />
+                <span className="text-sm">{brand}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
         <div>
           <h3 className="font-semibold mb-3">Price</h3>
           <div className="space-y-3">
@@ -92,41 +124,6 @@ export default function FiltersSidebar() {
         </div>
       </aside>
 
-      {/* Cagroy Section - White Background */}
-      <div className="space-y-6">
-        <div>
-          <h3 className="font-bold text-gray-900 mb-3">Cagroy</h3>
-          <div className="space-y-2">
-            {["All", "Electronics", "Clothing", "Home"].map((cat) => (
-              <label key={`cagroy-${cat}`} className="flex items-center gap-3 cursor-pointer hover:opacity-70">
-                <input
-                  type="radio"
-                  name="cagroy"
-                  value={cat}
-                  checked={category === cat}
-                  onChange={(e) => handleCategoryChange(e.target.value)}
-                  className="w-4 h-4 accent-blue-600 cursor-pointer"
-                />
-                <span className="text-sm text-gray-700">{cat}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Price Input */}
-        <div>
-          <h3 className="font-bold text-gray-900 mb-3">Price</h3>
-          <input
-            type="number"
-            value={priceMax}
-            onChange={(e) => handlePriceChange(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            min="0"
-            max="10000"
-            placeholder="5000"
-          />
-        </div>
-      </div>
     </div>
   );
 }
