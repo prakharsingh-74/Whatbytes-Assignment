@@ -44,7 +44,7 @@ A modern, responsive e-commerce application built with Next.js, TypeScript, and 
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4
-- **State Management**: React Context API
+- **State Management**: React Context
 - **Icons**: Lucide React
 - **Image Generation**: AI-generated product images
 
@@ -128,18 +128,6 @@ The UI closely matches the provided design specifications:
 - **Dark Blue**: `#0a2540` (Cart button)
 - **Button Blue**: `#0066cc` (Add to Cart buttons)
 
-## 🔄 Git Workflow
-
-This project follows best practices with **meaningful, incremental commits**:
-
-```bash
-✓ Initial Next.js setup with TypeScript, Tailwind CSS, and core data structures
-✓ Add layout components (Header, Footer) and product images
-✓ Add filters sidebar and product listing with search functionality
-✓ Add product detail page and cart page with full functionality
-✓ Final UI polish: updated sidebar design, added profile icon, and custom slider styles
-```
-
 ## 🚢 Deployment
 
 ### Deploy to Vercel
@@ -185,10 +173,3 @@ npm start
 - **Image Optimization**: Uses Next.js `Image` component for optimized loading
 - **Type Safety**: Full TypeScript coverage for all components
 
-## 📄 License
-
-This project is part of the Whatbytes Frontend Assignment.
-
----
-
-**Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
