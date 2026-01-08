@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -10,11 +10,12 @@ import { useCart } from "@/context/CartContext";
 import { Star, Minus, Plus } from "lucide-react";
 
 interface ProductDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const product = products.find((p) => p.id === params.id);
+  const { id } = use(params);
+  const product = products.find((p) => p.id === id);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
 
@@ -38,13 +39,11 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Breadcrumb */}
       <div className="mb-6 text-sm text-gray-600">
         <Link href="/" className="hover:text-blue-600">Home</Link> / <span>{product.name}</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Image Section */}
         <div className="bg-gray-100 rounded-lg p-8">
           <div className="relative w-full h-96">
             <Image
@@ -56,7 +55,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           </div>
         </div>
 
-        {/* Details Section */}
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
           
@@ -64,7 +62,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             {formatPrice(product.price)}
           </div>
 
-          {/* Rating */}
           {product.rating && (
             <div className="flex items-center gap-2 mb-6">
               <div className="flex">
@@ -83,13 +80,11 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             </div>
           )}
 
-          {/* Description */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Description</h2>
             <p className="text-gray-700 leading-relaxed">{product.description}</p>
           </div>
 
-          {/* Category */}
           <div className="mb-6">
             <h3 className="font-semibold mb-2">Category</h3>
             <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
@@ -97,7 +92,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             </span>
           </div>
 
-          {/* Quantity Selector */}
           <div className="mb-6">
             <h3 className="font-semibold mb-3">Quantity</h3>
             <div className="flex items-center gap-4">
@@ -117,7 +111,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             </div>
           </div>
 
-          {/* Add to Cart Button */}
           <button
             onClick={handleAddToCart}
             className="w-full bg-[#0066cc] text-white py-4 rounded-md hover:bg-[#005bb5] transition-colors font-semibold text-lg"
@@ -125,7 +118,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             Add to Cart
           </button>
 
-          {/* Return Link */}
           <Link href="/" className="block mt-6 text-blue-600 hover:underline text-center">
             ← Continue Shopping
           </Link>
